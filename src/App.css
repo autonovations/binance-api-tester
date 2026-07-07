@@ -1,0 +1,32 @@
+/* App.css — component-level styles */
+
+/* Smooth tab transitions */
+.MuiTab-root {
+  transition: color 0.2s ease !important;
+}
+
+/* Table row hover animation */
+.MuiTableRow-root {
+  transition: background-color 0.15s ease !important;
+}
+
+/* Sidebar item transitions */
+.MuiListItemButton-root {
+  transition: all 0.15s ease !important;
+}
+
+/* Paper elevation animation */
+.MuiPaper-root {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+
+/* Input focus ring */
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-width: 2px !important;
+}
+
+/* Chip pulse for GET badge */
+@keyframes gentle-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
