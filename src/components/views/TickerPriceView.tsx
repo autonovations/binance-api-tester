@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Box,
   Paper,
@@ -13,6 +13,7 @@ import { ParamPanel } from '../params/ParamPanel';
 import { ResultTabs } from '../results/ResultTabs';
 import { LoadingState } from '../results/LoadingState';
 import { ErrorState } from '../results/ErrorState';
+import { MultiPriceBarChart } from '../../charts/MultiPriceBarChart';
 import { useBinanceTickerPrice } from '../../hooks/useBinanceTickerPrice';
 import { ENDPOINT_MAP } from '../../config/endpoints';
 import type { TickerPrice } from '../../types/binance';
@@ -92,8 +93,9 @@ export function TickerPriceView() {
               </Box>
             </Paper>
           ) : (
-            // All tickers table
+            // All tickers
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <MultiPriceBarChart data={data as TickerPrice[]} />
               <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
                 <Paper elevation={0} sx={{ px: 2, py: 1, border: `1px solid ${theme.palette.divider}`, borderRadius: 2 }}>
                   <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>Total Pairs</Typography>
@@ -106,12 +108,14 @@ export function TickerPriceView() {
                   size="small"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
-                      </InputAdornment>
-                    ),
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
+                        </InputAdornment>
+                      ),
+                    },
                   }}
                   sx={{ maxWidth: 280 }}
                 />

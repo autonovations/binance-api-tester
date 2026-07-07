@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Paper, Typography, useTheme, Chip } from '@mui/material';
 import { ParamPanel } from '../params/ParamPanel';
 import { ResultTabs } from '../results/ResultTabs';

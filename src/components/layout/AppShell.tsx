@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Box, Toolbar } from '@mui/material';
 import { TopBar } from './TopBar';
 import { Sidebar, SIDEBAR_WIDTH } from './Sidebar';

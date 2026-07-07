@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {
   Drawer,
   List,
@@ -103,10 +103,14 @@ export function Sidebar({ selectedId, onSelect }: SidebarProps) {
                       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.3, width: '100%' }}>
                         <ListItemText
                           primary={ep.label}
-                          primaryTypographyProps={{
-                            fontWeight: isSelected ? 700 : 500,
-                            fontSize: '0.85rem',
-                            color: isSelected ? 'primary.main' : 'text.primary',
+                          slotProps={{
+                            primary: {
+                              sx: {
+                                fontWeight: isSelected ? 700 : 500,
+                                fontSize: '0.85rem',
+                                color: isSelected ? 'primary.main' : 'text.primary',
+                              }
+                            }
                           }}
                         />
                         <Typography

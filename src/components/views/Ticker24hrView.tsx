@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Paper, Typography, useTheme } from '@mui/material';
 import {
   TrendingUp as TrendingUpIcon,
@@ -8,6 +8,7 @@ import { ParamPanel } from '../params/ParamPanel';
 import { ResultTabs } from '../results/ResultTabs';
 import { LoadingState } from '../results/LoadingState';
 import { ErrorState } from '../results/ErrorState';
+import { Ticker24hrChart } from '../../charts/Ticker24hrChart';
 import { useBinanceTicker24hr } from '../../hooks/useBinanceTicker24hr';
 import { ENDPOINT_MAP } from '../../config/endpoints';
 
@@ -80,6 +81,9 @@ export function Ticker24hrView() {
       {data && !isLoading && !error && (
         <ResultTabs rawData={data}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {/* Interactive Chart */}
+            <Ticker24hrChart data={data} />
+
             {/* Hero card */}
             <Paper
               elevation={0}

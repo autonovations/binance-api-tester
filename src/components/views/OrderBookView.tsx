@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Box,
   Paper,
@@ -10,6 +10,7 @@ import { ParamPanel } from '../params/ParamPanel';
 import { ResultTabs } from '../results/ResultTabs';
 import { LoadingState } from '../results/LoadingState';
 import { ErrorState } from '../results/ErrorState';
+import { OrderBookDepthChart } from '../../charts/OrderBookDepthChart';
 import { useBinanceOrderBook } from '../../hooks/useBinanceOrderBook';
 import { ENDPOINT_MAP } from '../../config/endpoints';
 import type { OrderBookEntry } from '../../types/binance';
@@ -96,6 +97,9 @@ export function OrderBookView() {
       {data && !isLoading && !error && (
         <ResultTabs rawData={data}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {/* Depth Chart */}
+            <OrderBookDepthChart bids={bids} asks={asks} symbol={params.symbol} />
+
             {/* Stats row */}
             <Box sx={{ display: 'flex', gap: 2 }}>
               {[

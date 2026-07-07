@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Paper, Typography, useTheme } from '@mui/material';
 import {
   CheckCircle as CheckCircleIcon,

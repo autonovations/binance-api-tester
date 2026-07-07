@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Box, CircularProgress, Typography, useTheme } from '@mui/material';
 
 interface LoadingStateProps {

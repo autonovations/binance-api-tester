@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Tabs, Tab, useTheme } from '@mui/material';
 import {
   Dashboard as DashboardIcon,

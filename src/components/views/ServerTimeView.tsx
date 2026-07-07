@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Paper, Typography, useTheme } from '@mui/material';
 import { AccessTime as AccessTimeIcon } from '@mui/icons-material';
 import { ParamPanel } from '../params/ParamPanel';

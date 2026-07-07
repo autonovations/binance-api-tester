@@ -1,5 +1,13 @@
-import React, { useEffect, useRef } from 'react';
-import { createChart, ColorType, type IChartApi, type ISeriesApi, type CandlestickData, type UTCTimestamp } from 'lightweight-charts';
+import { useEffect, useRef } from 'react';
+import {
+  createChart,
+  ColorType,
+  CandlestickSeries,
+  HistogramSeries,
+  type IChartApi,
+  type ISeriesApi,
+  type UTCTimestamp,
+} from 'lightweight-charts';
 import { Box, useTheme } from '@mui/material';
 import type { Kline } from '../types/binance';
 
@@ -53,10 +61,11 @@ export function CandlestickChart({ data, symbol, interval }: CandlestickChartPro
         secondsVisible: false,
       },
       width: containerRef.current.clientWidth,
-      height: 380,
+      height: 420,
     });
 
-    const series = chart.addCandlestickSeries({
+    // ── Candlestick series (v5 API) ───────────────────────────────────────────
+    const series = chart.addSeries(CandlestickSeries, {
       upColor: '#02C076',
       downColor: '#F6465D',
       borderUpColor: '#02C076',
@@ -65,7 +74,18 @@ export function CandlestickChart({ data, symbol, interval }: CandlestickChartPro
       wickDownColor: '#F6465D',
     });
 
-    const chartData: CandlestickData<UTCTimestamp>[] = data.map((k) => ({
+    // ── Volume histogram (secondary scale, v5 API) ────────────────────────────
+    const volSeries = chart.addSeries(HistogramSeries, {
+      priceFormat: { type: 'volume' },
+      priceScaleId: 'volume',
+    });
+
+    chart.priceScale('volume').applyOptions({
+      scaleMargins: { top: 0.82, bottom: 0 },
+      borderVisible: false,
+    });
+
+    const chartData = data.map((k) => ({
       time: Math.floor(k.openTime / 1000) as UTCTimestamp,
       open: k.open,
       high: k.high,
@@ -73,7 +93,16 @@ export function CandlestickChart({ data, symbol, interval }: CandlestickChartPro
       close: k.close,
     }));
 
+    const volData = data.map((k) => ({
+      time: Math.floor(k.openTime / 1000) as UTCTimestamp,
+      value: k.volume,
+      color: k.close >= k.open
+        ? 'rgba(2, 192, 118, 0.5)'
+        : 'rgba(246, 70, 93, 0.5)',
+    }));
+
     series.setData(chartData);
+    volSeries.setData(volData);
     chart.timeScale().fitContent();
 
     chartRef.current = chart;
@@ -117,6 +146,16 @@ export function CandlestickChart({ data, symbol, interval }: CandlestickChartPro
         </Box>
         <Box sx={{ fontSize: '0.75rem', color: 'text.secondary', bgcolor: 'rgba(240,185,11,0.1)', px: 1, py: 0.25, borderRadius: 1, fontWeight: 600 }}>
           {interval}
+        </Box>
+        <Box sx={{ display: 'flex', gap: 1.5, ml: 'auto' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+            <Box sx={{ width: 10, height: 10, borderRadius: 1, bgcolor: 'rgba(2,192,118,0.5)' }} />
+            <Box sx={{ fontSize: '0.68rem', color: 'text.secondary' }}>Vol ▲</Box>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+            <Box sx={{ width: 10, height: 10, borderRadius: 1, bgcolor: 'rgba(246,70,93,0.5)' }} />
+            <Box sx={{ fontSize: '0.68rem', color: 'text.secondary' }}>Vol ▼</Box>
+          </Box>
         </Box>
         <Box sx={{ fontSize: '0.72rem', color: 'text.secondary' }}>
           TradingView Lightweight Charts™

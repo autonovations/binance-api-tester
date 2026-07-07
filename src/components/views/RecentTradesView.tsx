@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Typography, Chip } from '@mui/material';
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
 import { useTheme } from '@mui/material';
@@ -6,6 +6,7 @@ import { ParamPanel } from '../params/ParamPanel';
 import { ResultTabs } from '../results/ResultTabs';
 import { LoadingState } from '../results/LoadingState';
 import { ErrorState } from '../results/ErrorState';
+import { TradesVolumeChart } from '../../charts/TradesVolumeChart';
 import { useBinanceRecentTrades } from '../../hooks/useBinanceRecentTrades';
 import { ENDPOINT_MAP } from '../../config/endpoints';
 import type { Trade } from '../../types/binance';
@@ -103,15 +104,18 @@ export function RecentTradesView() {
 
       {data && !isLoading && !error && (
         <ResultTabs rawData={data}>
-          <MaterialReactTable
-            columns={columns}
-            data={data}
-            enablePagination
-            initialState={{ pagination: { pageSize: 20, pageIndex: 0 } }}
-            muiTablePaperProps={{ elevation: 0, sx: { border: `1px solid ${theme.palette.divider}`, borderRadius: 2 } }}
-            muiTableHeadCellProps={{ sx: { fontWeight: 700, fontSize: '0.75rem' } }}
-            muiTableBodyCellProps={{ sx: { py: 0.75 } }}
-          />
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <TradesVolumeChart trades={data} symbol={params.symbol} />
+            <MaterialReactTable
+              columns={columns}
+              data={data}
+              enablePagination
+              initialState={{ pagination: { pageSize: 20, pageIndex: 0 } }}
+              muiTablePaperProps={{ elevation: 0, sx: { border: `1px solid ${theme.palette.divider}`, borderRadius: 2 } }}
+              muiTableHeadCellProps={{ sx: { fontWeight: 700, fontSize: '0.75rem' } }}
+              muiTableBodyCellProps={{ sx: { py: 0.75 } }}
+            />
+          </Box>
         </ResultTabs>
       )}
     </Box>
