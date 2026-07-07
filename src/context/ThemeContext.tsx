@@ -66,12 +66,17 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
         },
         typography: {
           fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontSize: 15,
           h1: { fontWeight: 700 },
           h2: { fontWeight: 700 },
           h3: { fontWeight: 600 },
           h4: { fontWeight: 600 },
           h5: { fontWeight: 600 },
           h6: { fontWeight: 600 },
+          body1: { fontSize: '1.05rem' },
+          body2: { fontSize: '0.92rem' },
+          button: { fontSize: '0.95rem' },
+          caption: { fontSize: '0.78rem' },
         },
         shape: { borderRadius: 8 },
         components: {

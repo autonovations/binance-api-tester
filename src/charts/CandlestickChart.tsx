@@ -35,7 +35,7 @@ export function CandlestickChart({ data, symbol, interval }: CandlestickChartPro
         },
         textColor: isDark ? '#848E9C' : '#707A8A',
         fontFamily: '"Inter", sans-serif',
-        fontSize: 12,
+        fontSize: 14,
       },
       grid: {
         vertLines: { color: isDark ? '#2B3139' : '#E6E8EA' },

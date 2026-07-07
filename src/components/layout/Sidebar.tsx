@@ -87,16 +87,20 @@ export function Sidebar({ selectedId, onSelect }: SidebarProps) {
                         borderRadius: 1.5,
                         px: 1.5,
                         py: 0.75,
-                        transition: 'all 0.15s ease',
+                        transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                         '&.Mui-selected': {
-                          bgcolor: 'rgba(240,185,11,0.12)',
-                          borderLeft: `2px solid ${theme.palette.primary.main}`,
+                          bgcolor: theme.palette.mode === 'dark' ? 'rgba(240,185,11,0.12)' : 'rgba(240,185,11,0.08)',
+                          borderLeft: `3px solid ${theme.palette.primary.main}`,
+                          boxShadow: '0 4px 12px rgba(240,185,11,0.1)',
                           '&:hover': {
-                            bgcolor: 'rgba(240,185,11,0.18)',
+                            bgcolor: theme.palette.mode === 'dark' ? 'rgba(240,185,11,0.18)' : 'rgba(240,185,11,0.12)',
+                            transform: 'translateX(4px)',
                           },
                         },
                         '&:hover': {
-                          bgcolor: 'rgba(255,255,255,0.05)',
+                          bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)',
+                          transform: 'translateX(4px)',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
                         },
                       }}
                     >

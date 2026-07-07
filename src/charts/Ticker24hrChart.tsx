@@ -134,9 +134,9 @@ function ChangeGauge({ pct, isDark }: { pct: number; isDark: boolean }) {
           strokeLinecap="round"
         />
         {/* Labels */}
-        <text x="20" y="100" fill={isDark ? '#848E9C' : '#707A8A'} fontSize="10" fontFamily="Inter,sans-serif">-10%</text>
-        <text x="155" y="100" fill={isDark ? '#848E9C' : '#707A8A'} fontSize="10" fontFamily="Inter,sans-serif">+10%</text>
-        <text x="88" y="40" fill={isDark ? '#848E9C' : '#707A8A'} fontSize="9" fontFamily="Inter,sans-serif">0%</text>
+        <text x="15" y="100" fill={isDark ? '#848E9C' : '#707A8A'} fontSize="12" fontFamily="Inter,sans-serif">-10%</text>
+        <text x="152" y="100" fill={isDark ? '#848E9C' : '#707A8A'} fontSize="12" fontFamily="Inter,sans-serif">+10%</text>
+        <text x="88" y="40" fill={isDark ? '#848E9C' : '#707A8A'} fontSize="11" fontFamily="Inter,sans-serif">0%</text>
       </svg>
       <Typography sx={{ fontWeight: 700, fontSize: '1.3rem', color, fontFamily: 'monospace', mt: -1.5 }}>
         {isPositive ? '+' : ''}{pct.toFixed(2)}%

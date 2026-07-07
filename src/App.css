@@ -1,28 +1,72 @@
 /* App.css — component-level styles */
 
-/* Smooth tab transitions */
+/* Smooth tab transitions & hover effects */
 .MuiTab-root {
-  transition: color 0.2s ease !important;
+  transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease !important;
+  border-radius: 4px;
+}
+.MuiTab-root:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: #F0B90B !important;
 }
 
-/* Table row hover animation */
+/* Table row hover animation & feedback */
 .MuiTableRow-root {
-  transition: background-color 0.15s ease !important;
+  cursor: pointer;
+  transition: background-color 0.2s ease !important;
+}
+.MuiTableRow-root:hover {
+  background-color: rgba(240, 185, 11, 0.05) !important;
 }
 
-/* Sidebar item transitions */
+/* Sidebar item transitions & dynamic offset */
 .MuiListItemButton-root {
-  transition: all 0.15s ease !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.MuiListItemButton-root:hover {
+  transform: translateX(4px);
+  background-color: rgba(240, 185, 11, 0.04) !important;
+}
+.MuiListItemButton-root.Mui-selected {
+  box-shadow: 0 4px 12px rgba(240, 185, 11, 0.1);
 }
 
-/* Paper elevation animation */
+/* Paper elevation animation & modern lift effect */
 .MuiPaper-root {
+  transition: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.MuiPaper-root:hover {
+  transform: translateY(-2px);
+  border-color: rgba(240, 185, 11, 0.35) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Input focus ring and ambient glow */
+.MuiOutlinedInput-root {
   transition: box-shadow 0.2s ease, border-color 0.2s ease !important;
 }
-
-/* Input focus ring */
+.MuiOutlinedInput-root.Mui-focused {
+  box-shadow: 0 0 0 3px rgba(240, 185, 11, 0.15) !important;
+}
 .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
   border-width: 2px !important;
+  border-color: #F0B90B !important;
+}
+
+/* Button transitions & 3D micro-scale */
+.MuiButton-root {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
+              background-color 0.2s ease !important;
+}
+.MuiButton-root:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 16px rgba(240, 185, 11, 0.25);
+}
+.MuiButton-root:active {
+  transform: translateY(0.5px);
 }
 
 /* Chip pulse for GET badge */
@@ -30,3 +74,4 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0.7; }
 }
+

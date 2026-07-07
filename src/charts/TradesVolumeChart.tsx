@@ -29,7 +29,7 @@ export function TradesVolumeChart({ trades, symbol }: TradesVolumeChartProps) {
         background: { type: ColorType.Solid, color: isDark ? '#161A1E' : '#FFFFFF' },
         textColor: isDark ? '#848E9C' : '#707A8A',
         fontFamily: '"Inter", sans-serif',
-        fontSize: 11,
+        fontSize: 13,
       },
       grid: {
         vertLines: { color: isDark ? '#2B3139' : '#E6E8EA' },
