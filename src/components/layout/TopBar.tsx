@@ -12,12 +12,15 @@ import {
   DarkMode as DarkModeIcon,
   LightMode as LightModeIcon,
   Hub as HubIcon,
+  MenuBook as BookIcon,
 } from '@mui/icons-material';
 import { useThemeMode } from '../../context/ThemeContext';
+import { useSymbolsGuide } from '../../context/SymbolsGuideContext';
 
 export function TopBar() {
   const { mode, toggleMode } = useThemeMode();
   const theme = useTheme();
+  const { openGuide } = useSymbolsGuide();
 
   return (
     <AppBar
@@ -92,6 +95,26 @@ export function TopBar() {
             api.binance.com
           </Typography>
         </Box>
+
+        <Tooltip title="Guía de Símbolos y Activos">
+          <IconButton
+            onClick={() => openGuide()}
+            size="small"
+            sx={{
+              color: 'text.secondary',
+              border: '1px solid',
+              borderColor: mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+              borderRadius: 2,
+              p: 0.75,
+              '&:hover': {
+                borderColor: 'primary.main',
+                color: 'primary.main',
+              },
+            }}
+          >
+            <BookIcon sx={{ fontSize: 18 }} />
+          </IconButton>
+        </Tooltip>
 
         <Tooltip title={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}>
           <IconButton onClick={toggleMode} size="small" sx={{ color: 'text.secondary' }}>

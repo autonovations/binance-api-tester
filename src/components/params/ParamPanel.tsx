@@ -11,11 +11,18 @@ import {
   Divider,
   Autocomplete,
   CircularProgress,
+  IconButton,
+  Tooltip,
 } from '@mui/material';
-import { PlayArrow as PlayArrowIcon, Refresh as RefreshIcon } from '@mui/icons-material';
+import {
+  PlayArrow as PlayArrowIcon,
+  Refresh as RefreshIcon,
+  HelpOutlined as HelpIcon,
+} from '@mui/icons-material';
 import { useForm, Controller } from 'react-hook-form';
 import type { EndpointConfig } from '../../types/binance';
 import { useBinanceExchangeInfo } from '../../hooks/useBinanceExchangeInfo';
+import { useSymbolsGuide } from '../../context/SymbolsGuideContext';
 
 interface ParamPanelProps {
   endpoint: EndpointConfig;
@@ -25,6 +32,7 @@ interface ParamPanelProps {
 
 export function ParamPanel({ endpoint, onExecute, isLoading }: ParamPanelProps) {
   const theme = useTheme();
+  const { openGuide } = useSymbolsGuide();
 
   const hasSymbolParam = endpoint.params.some((p) => p.type === 'symbol');
   const { data: exchangeInfo, isLoading: isSymbolsLoading } = useBinanceExchangeInfo(hasSymbolParam);
@@ -218,6 +226,19 @@ export function ParamPanel({ endpoint, onExecute, isLoading }: ParamPanelProps) 
                                       {isSymbolsLoading ? (
                                         <CircularProgress color="inherit" size={20} />
                                       ) : null}
+                                      <Tooltip title="Ver guía de símbolos">
+                                        <IconButton
+                                          size="small"
+                                          onClick={() => {
+                                            openGuide(String(value || ''), (selectedSymbol) => {
+                                              onChange(selectedSymbol);
+                                            });
+                                          }}
+                                          sx={{ mr: 0.5, color: 'text.secondary', '&:hover': { color: 'primary.main' } }}
+                                        >
+                                          <HelpIcon fontSize="small" />
+                                        </IconButton>
+                                      </Tooltip>
                                       {params.slotProps.input.endAdornment}
                                     </>
                                   ),

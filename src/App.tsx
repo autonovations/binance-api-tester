@@ -4,6 +4,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Box, Typography, useTheme } from '@mui/material';
 import { ThemeProvider } from './context/ThemeContext';
 import { AppShell } from './components/layout/AppShell';
+import { SymbolsGuideProvider } from './context/SymbolsGuideContext';
+import { SymbolsGuide } from './components/symbols/SymbolsGuide';
 
 // Views
 import { PingView } from './components/views/PingView';
@@ -71,6 +73,9 @@ function AppContent() {
 
         {/* Active View */}
         {VIEW_MAP[selectedEndpoint]}
+
+        {/* Symbols Guide Modal */}
+        <SymbolsGuide />
       </Box>
     </AppShell>
   );
@@ -80,7 +85,9 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <AppContent />
+        <SymbolsGuideProvider>
+          <AppContent />
+        </SymbolsGuideProvider>
       </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
