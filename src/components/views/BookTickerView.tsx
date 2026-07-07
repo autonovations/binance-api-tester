@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Paper, Typography, useTheme, Divider, Chip } from '@mui/material';
+import { Box, Paper, Typography, useTheme, Chip } from '@mui/material';
 import { ParamPanel } from '../params/ParamPanel';
 import { ResultTabs } from '../results/ResultTabs';
 import { LoadingState } from '../results/LoadingState';

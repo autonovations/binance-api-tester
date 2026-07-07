@@ -4,7 +4,6 @@ import {
   Paper,
   Typography,
   useTheme,
-  Divider,
 } from '@mui/material';
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
 import { ParamPanel } from '../params/ParamPanel';

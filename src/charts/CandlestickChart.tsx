@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { createChart, ColorType, type IChartApi, type ISeriesApi, type CandlestickSeriesOptions } from 'lightweight-charts';
+import { createChart, ColorType, type IChartApi, type ISeriesApi, type CandlestickData, type UTCTimestamp } from 'lightweight-charts';
 import { Box, useTheme } from '@mui/material';
 import type { Kline } from '../types/binance';
 
@@ -65,15 +65,15 @@ export function CandlestickChart({ data, symbol, interval }: CandlestickChartPro
       wickDownColor: '#F6465D',
     });
 
-    const chartData = data.map((k) => ({
-      time: Math.floor(k.openTime / 1000) as unknown as string,
+    const chartData: CandlestickData<UTCTimestamp>[] = data.map((k) => ({
+      time: Math.floor(k.openTime / 1000) as UTCTimestamp,
       open: k.open,
       high: k.high,
       low: k.low,
       close: k.close,
     }));
 
-    series.setData(chartData as any);
+    series.setData(chartData);
     chart.timeScale().fitContent();
 
     chartRef.current = chart;

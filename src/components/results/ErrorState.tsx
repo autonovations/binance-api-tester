@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Paper, Typography, Alert, AlertTitle, useTheme } from '@mui/material';
+import { Typography, Alert, AlertTitle } from '@mui/material';
 import { ErrorOutlined as ErrorIcon } from '@mui/icons-material';
 
 interface ErrorStateProps {
