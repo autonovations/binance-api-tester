@@ -44,7 +44,7 @@ export const ENDPOINTS: EndpointConfig[] = [
       {
         name: 'symbol',
         label: 'Symbol',
-        type: 'text',
+        type: 'symbol',
         required: true,
         defaultValue: 'BTCUSDT',
         placeholder: 'e.g. BTCUSDT',
@@ -70,7 +70,7 @@ export const ENDPOINTS: EndpointConfig[] = [
       {
         name: 'symbol',
         label: 'Symbol',
-        type: 'text',
+        type: 'symbol',
         required: true,
         defaultValue: 'BTCUSDT',
         placeholder: 'e.g. ETHUSDT',
@@ -96,7 +96,7 @@ export const ENDPOINTS: EndpointConfig[] = [
       {
         name: 'symbol',
         label: 'Symbol',
-        type: 'text',
+        type: 'symbol',
         required: true,
         defaultValue: 'BTCUSDT',
         placeholder: 'e.g. BTCUSDT',
@@ -130,7 +130,7 @@ export const ENDPOINTS: EndpointConfig[] = [
       {
         name: 'symbol',
         label: 'Symbol (optional)',
-        type: 'text',
+        type: 'symbol',
         required: false,
         defaultValue: '',
         placeholder: 'Leave empty for all symbols',
@@ -148,7 +148,7 @@ export const ENDPOINTS: EndpointConfig[] = [
       {
         name: 'symbol',
         label: 'Symbol',
-        type: 'text',
+        type: 'symbol',
         required: true,
         defaultValue: 'BTCUSDT',
         placeholder: 'e.g. BTCUSDT',
@@ -166,7 +166,7 @@ export const ENDPOINTS: EndpointConfig[] = [
       {
         name: 'symbol',
         label: 'Symbol',
-        type: 'text',
+        type: 'symbol',
         required: true,
         defaultValue: 'BTCUSDT',
         placeholder: 'e.g. BTCUSDT',

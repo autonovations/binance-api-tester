@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import {
   Box,
   Paper,
@@ -9,10 +9,13 @@ import {
   useTheme,
   Chip,
   Divider,
+  Autocomplete,
+  CircularProgress,
 } from '@mui/material';
 import { PlayArrow as PlayArrowIcon, Refresh as RefreshIcon } from '@mui/icons-material';
 import { useForm, Controller } from 'react-hook-form';
 import type { EndpointConfig } from '../../types/binance';
+import { useBinanceExchangeInfo } from '../../hooks/useBinanceExchangeInfo';
 
 interface ParamPanelProps {
   endpoint: EndpointConfig;
@@ -22,6 +25,18 @@ interface ParamPanelProps {
 
 export function ParamPanel({ endpoint, onExecute, isLoading }: ParamPanelProps) {
   const theme = useTheme();
+
+  const hasSymbolParam = endpoint.params.some((p) => p.type === 'symbol');
+  const { data: exchangeInfo, isLoading: isSymbolsLoading } = useBinanceExchangeInfo(hasSymbolParam);
+
+  const availableSymbols = useMemo(() => {
+    if (!exchangeInfo?.symbols) return [];
+    return exchangeInfo.symbols
+      .filter((s) => s.status === 'TRADING')
+      .map((s) => s.symbol)
+      .sort();
+  }, [exchangeInfo]);
+
   const { control, handleSubmit, reset } = useForm<Record<string, string | number>>({
     defaultValues: Object.fromEntries(
       endpoint.params.map((p) => [p.name, p.defaultValue ?? ''])
@@ -36,7 +51,13 @@ export function ParamPanel({ endpoint, onExecute, isLoading }: ParamPanelProps) 
   }, [endpoint.id, reset, endpoint.params]);
 
   const onSubmit = (data: Record<string, string | number>) => {
-    onExecute(data);
+    const normalizedData = { ...data };
+    endpoint.params.forEach((param) => {
+      if (param.type === 'symbol' && typeof normalizedData[param.name] === 'string') {
+        normalizedData[param.name] = (normalizedData[param.name] as string).toUpperCase();
+      }
+    });
+    onExecute(normalizedData);
   };
 
   return (
@@ -144,38 +165,85 @@ export function ParamPanel({ endpoint, onExecute, isLoading }: ParamPanelProps) 
                   name={param.name}
                   control={control}
                   rules={{ required: param.required ? `${param.label} is required` : false }}
-                  render={({ field, fieldState }) => (
-                    param.type === 'select' ? (
-                      <TextField
-                        {...field}
-                        select
-                        label={param.label}
-                        size="small"
-                        error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
-                        required={param.required}
-                        sx={{ '& .MuiInputBase-root': { fontFamily: 'monospace' } }}
-                      >
-                        {(param.options ?? []).map((opt) => (
-                          <MenuItem key={opt} value={opt}>
-                            {opt}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    ) : (
-                      <TextField
-                        {...field}
-                        type={param.type === 'number' ? 'number' : 'text'}
-                        label={param.label}
-                        placeholder={param.placeholder}
-                        size="small"
-                        error={!!fieldState.error}
-                        helperText={fieldState.error?.message}
-                        required={param.required}
-                        sx={{ '& .MuiInputBase-root': { fontFamily: 'monospace' } }}
-                      />
-                    )
-                  )}
+                  render={({ field, fieldState }) => {
+                    if (param.type === 'select') {
+                      return (
+                        <TextField
+                          {...field}
+                          select
+                          label={param.label}
+                          size="small"
+                          error={!!fieldState.error}
+                          helperText={fieldState.error?.message}
+                          required={param.required}
+                          sx={{ '& .MuiInputBase-root': { fontFamily: 'monospace' } }}
+                        >
+                          {(param.options ?? []).map((opt) => (
+                            <MenuItem key={opt} value={opt}>
+                              {opt}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      );
+                    } else if (param.type === 'symbol') {
+                      const { onChange, value, ...fieldProps } = field;
+                      return (
+                        <Autocomplete
+                          freeSolo
+                          options={availableSymbols}
+                          loading={isSymbolsLoading}
+                          value={String(value || '')}
+                          onChange={(_, newValue) => {
+                            onChange(newValue || '');
+                          }}
+                          onInputChange={(_, newInputValue) => {
+                            onChange(newInputValue || '');
+                          }}
+                          {...fieldProps}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label={param.label}
+                              placeholder={param.placeholder}
+                              size="small"
+                              error={!!fieldState.error}
+                              helperText={fieldState.error?.message}
+                              required={param.required}
+                              slotProps={{
+                                ...params.slotProps,
+                                input: {
+                                  ...params.slotProps.input,
+                                  endAdornment: (
+                                    <>
+                                      {isSymbolsLoading ? (
+                                        <CircularProgress color="inherit" size={20} />
+                                      ) : null}
+                                      {params.slotProps.input.endAdornment}
+                                    </>
+                                  ),
+                                },
+                              }}
+                              sx={{ '& .MuiInputBase-root': { fontFamily: 'monospace' } }}
+                            />
+                          )}
+                        />
+                      );
+                    } else {
+                      return (
+                        <TextField
+                          {...field}
+                          type={param.type === 'number' ? 'number' : 'text'}
+                          label={param.label}
+                          placeholder={param.placeholder}
+                          size="small"
+                          error={!!fieldState.error}
+                          helperText={fieldState.error?.message}
+                          required={param.required}
+                          sx={{ '& .MuiInputBase-root': { fontFamily: 'monospace' } }}
+                        />
+                      );
+                    }
+                  }}
                 />
               ))}
             </Box>

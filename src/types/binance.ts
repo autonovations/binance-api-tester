@@ -147,7 +147,7 @@ export interface BookTicker {
 export interface EndpointParam {
   name: string;
   label: string;
-  type: 'text' | 'number' | 'select';
+  type: 'text' | 'number' | 'select' | 'symbol';
   required: boolean;
   options?: string[];
   defaultValue?: string | number;
