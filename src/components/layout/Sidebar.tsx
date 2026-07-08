@@ -20,12 +20,13 @@ interface SidebarProps {
   onSelect: (id: string) => void;
 }
 
-const CATEGORIES = ['General', 'Market Data', 'Tickers'];
+const CATEGORIES = ['General', 'Market Data', 'Tickers', 'WebSockets'];
 
 const CATEGORY_COLORS: Record<string, string> = {
   General: '#1E88E5',
   'Market Data': '#7B61FF',
   Tickers: '#02C076',
+  WebSockets: '#F0B90B',
 };
 
 export function Sidebar({ selectedId, onSelect }: SidebarProps) {
@@ -129,15 +130,15 @@ export function Sidebar({ selectedId, onSelect }: SidebarProps) {
                         </Typography>
                       </Box>
                       <Chip
-                        label="GET"
+                        label={ep.method}
                         size="small"
                         sx={{
                           height: 18,
                           fontSize: '0.58rem',
                           fontWeight: 700,
-                          bgcolor: 'rgba(2,192,118,0.15)',
-                          color: '#02C076',
-                          border: '1px solid rgba(2,192,118,0.3)',
+                          bgcolor: ep.method === 'WSS' ? 'rgba(240,185,11,0.15)' : 'rgba(2,192,118,0.15)',
+                          color: ep.method === 'WSS' ? '#F0B90B' : '#02C076',
+                          border: `1px solid ${ep.method === 'WSS' ? 'rgba(240,185,11,0.3)' : 'rgba(2,192,118,0.3)'}`,
                           ml: 0.5,
                           flexShrink: 0,
                         }}

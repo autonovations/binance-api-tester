@@ -174,6 +174,25 @@ export const ENDPOINTS: EndpointConfig[] = [
     ],
     category: 'Tickers',
   },
+  {
+    id: 'wsTrade',
+    label: 'Real-time Trades (WS)',
+    path: 'wss://stream.binance.com:9443/ws/btcusdt@trade',
+    method: 'WSS',
+    description: 'Establece una conexión WebSocket para transmitir en tiempo real los detalles de ejecución de transacciones de Binance.',
+    params: [
+      {
+        name: 'symbol',
+        label: 'Symbol',
+        type: 'symbol',
+        required: true,
+        defaultValue: 'BTCUSDT',
+        placeholder: 'e.g. BTCUSDT',
+      },
+    ],
+    category: 'WebSockets',
+  },
 ];
 
 export const ENDPOINT_MAP = Object.fromEntries(ENDPOINTS.map((e) => [e.id, e]));
+

@@ -17,6 +17,7 @@ import { KlinesView } from './components/views/KlinesView';
 import { TickerPriceView } from './components/views/TickerPriceView';
 import { Ticker24hrView } from './components/views/Ticker24hrView';
 import { BookTickerView } from './components/views/BookTickerView';
+import { WebSocketTradeView } from './components/views/WebSocketTradeView';
 import { ENDPOINT_MAP } from './config/endpoints';
 
 const queryClient = new QueryClient({
@@ -38,6 +39,7 @@ const VIEW_MAP: Record<string, React.ReactNode> = {
   tickerPrice: <TickerPriceView />,
   ticker24hr: <Ticker24hrView />,
   bookTicker: <BookTickerView />,
+  wsTrade: <WebSocketTradeView />,
 };
 
 function AppContent() {
@@ -67,7 +69,7 @@ function AppContent() {
               border: `1px solid ${theme.palette.divider}`,
             }}
           >
-            GET — {endpoint?.path}
+            {endpoint?.method} — {endpoint?.path}
           </Typography>
         </Box>
 
